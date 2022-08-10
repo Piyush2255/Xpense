@@ -1,10 +1,22 @@
 import Home from '../screens/home';
-import Expense from '../screens/detail';
+import Expense from '../screens/expense';
+import AddExpense from '../screens/addExpense';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
+const ExpenseStack=createNativeStackNavigator();
+
+function ExpenseStackScreen(){
+  return(
+    <ExpenseStack.Navigator>
+      <ExpenseStack.Screen name="Expenses" component={Expense}></ExpenseStack.Screen>
+      <ExpenseStack.Screen name="Add Expenses" component={AddExpense}></ExpenseStack.Screen>
+    </ExpenseStack.Navigator>
+  );
+}
 
 export default function Route() {
   return (
@@ -28,7 +40,7 @@ export default function Route() {
         })}
       >
         <Tab.Screen name='Home' component={Home} />
-        <Tab.Screen name='Expenses' component={Expense} />
+        <Tab.Screen name='Expenses' component={ExpenseStackScreen} options={{headerShown: false}}/>
       </Tab.Navigator>
     </NavigationContainer>
   );
