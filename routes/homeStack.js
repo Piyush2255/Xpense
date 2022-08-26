@@ -12,7 +12,7 @@ const ExpenseStack=createNativeStackNavigator();
 function ExpenseStackScreen(){
   return(
     <ExpenseStack.Navigator>
-      <ExpenseStack.Screen name="Expenses" component={Expense}></ExpenseStack.Screen>
+      <ExpenseStack.Screen name="Expense" component={Expense} options={{title: "Expenses"}}></ExpenseStack.Screen>
       <ExpenseStack.Screen name="Add Expenses" component={AddExpense}></ExpenseStack.Screen>
     </ExpenseStack.Navigator>
   );

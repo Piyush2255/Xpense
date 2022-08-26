@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import { StyleSheet, View, Text, Button, Pressable, TouchableOpacity, FlatList, ScrollView } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const DATA = [
     {
@@ -49,6 +50,27 @@ const Item = ({ item, index }) => {
 
 export default function Home({ navigation }) {
 
+    useEffect(()=>{
+        async function checkCategories(){
+            try{
+                const categories=await AsyncStorage.getItem('categories');
+                if(categories===null){
+                    const category=['Food','Travel','Clothing','Groceries','Others'];
+                    const categoryValues=JSON.stringify(category);
+                    await AsyncStorage.setItem('categories',categoryValues);
+                }
+                else{
+                    console.log("categories are present")
+                    console.log(JSON.parse(categories));
+                }
+            }
+            catch(e){
+                console.log(e);
+            }
+        }
+        checkCategories();
+    },[]);
+
     return (
         <View style={styles.home}>
             <ScrollView>
@@ -75,7 +97,10 @@ export default function Home({ navigation }) {
                 <View style={styles.expenditureDetailView}>
                     <Text style={styles.expenditureDetailHead}>Recent Expenses</Text>
                     <View style={styles.expenseList}>
-                        <FlatList data={DATA} renderItem={Item} keyExtractor={(item) => item.id} scrollEnabled={false} />
+                        {DATA.map((item,index)=>{
+                            return(<Item item={item} index={index} key={item.id}></Item>);
+                        })}
+                        {/* <FlatList data={DATA} renderItem={Item} keyExtractor={(item) => item.id} scrollEnabled={false} /> */}
                     </View>
                     <Pressable style={styles.viewExpenses} onPress={() => navigation.navigate('Expenses')} >
                         <Text style={styles.viewExpensesText}>View All</Text>
@@ -84,7 +109,10 @@ export default function Home({ navigation }) {
                 <View style={styles.expenditureDetailView}>
                     <Text style={styles.expenditureDetailHead}>Recent Expenses</Text>
                     <View style={styles.expenseList}>
-                        <FlatList data={DATA} renderItem={Item} keyExtractor={(item) => item.id} scrollEnabled={false} />
+                        {DATA.map((item,index)=>{
+                            return(<Item item={item} index={index} key={item.id}></Item>);
+                        })}
+                        {/* <FlatList data={DATA} renderItem={Item} keyExtractor={(item) => item.id} scrollEnabled={false} /> */}
                     </View>
                     <Pressable style={styles.viewExpenses} onPress={() => navigation.navigate('Expenses')} >
                         <Text style={styles.viewExpensesText}>View All</Text>

@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, FlatList, Button,Pressable } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const DATA = [
     {
